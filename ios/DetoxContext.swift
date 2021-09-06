@@ -1,5 +1,5 @@
 @objc(DetoxContext)
-class DetoxContext: NSObject {
+public class DetoxContext: NSObject {
   @objc
   public static func processLaunchArgs() -> [String:Any] {
     let arguments = ProcessInfo.processInfo.arguments

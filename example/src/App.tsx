@@ -1,20 +1,21 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import DetoxContext from 'react-native-detox-context';
+import { StyleSheet, View } from 'react-native';
+import { DetoxContext, withDetoxContext } from 'react-native-detox-context';
 
-export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    DetoxContext.multiply(3, 7).then(setResult);
-  }, []);
-
-  return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+function App() {
+  console.log('isAutomatedTest:', DetoxContext.isAutomatedTest);
+  console.log(
+    'String value from context:',
+    DetoxContext.getString('someString')
   );
+  console.log('Boolean value from context:', DetoxContext.getBool('someBool'));
+  console.log(
+    'Object value from context:',
+    DetoxContext.getObject<{ prop1: string; prop2: string }>('someObject')
+  );
+
+  return <View style={styles.container} />;
 }
 
 const styles = StyleSheet.create({
@@ -29,3 +30,5 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
 });
+
+export default withDetoxContext(App);

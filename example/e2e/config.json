@@ -1,0 +1,8 @@
+{
+    "testEnvironment": "./DetoxEnvironment",
+    "testRunner": "jest-circus/runner",
+    "testTimeout": 60000,
+    "testRegex": "\\.e2e\\.ts$",
+    "reporters": ["detox/runners/jest/streamlineReporter"],
+    "verbose": true
+}

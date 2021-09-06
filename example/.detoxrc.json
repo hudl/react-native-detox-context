@@ -1,0 +1,41 @@
+{
+  "testRunner": "jest",
+  "runnerConfig": "e2e/config.json",
+  "skipLegacyWorkersInjection": true,
+  "apps": {
+    "ios": {
+      "type": "ios.app",
+      "build": "cd ios && xcodebuild -workspace DetoxContextExample.xcworkspace -configuration Debug -scheme DetoxContextExample -derivedDataPath build/ -destination id=FFDDEAE5-D9C4-4ADD-8900-A21D2D04B6D2",
+      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/DetoxContextExample.app"
+    },
+    "android": {
+      "type": "android.apk",
+      "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ..",
+      "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk"
+    }
+  },
+  "devices": {
+    "simulator": {
+      "type": "ios.simulator",
+      "device": {
+        "type": "iPhone 11"
+      }
+    },
+    "emulator": {
+      "type": "android.emulator",
+      "device": {
+        "avdName": "Pixel_29"
+      }
+    }
+  },
+  "configurations": {
+    "ios": {
+      "device": "simulator",
+      "app": "ios"
+    },
+    "android": {
+      "device": "emulator",
+      "app": "android"
+    }
+  }
+}
