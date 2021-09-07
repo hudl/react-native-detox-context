@@ -32,7 +32,7 @@
     "pods": "cd example && pod-install --quiet",
     "prepare": "bob build",
     "release": "release-it",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "typescript": "tsc --noEmit"
   },
   "keywords": [
