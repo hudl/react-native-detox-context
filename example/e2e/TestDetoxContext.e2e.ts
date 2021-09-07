@@ -1,7 +1,7 @@
 import { contextArgs } from 'react-native-detox-context';
 import { device } from 'detox';
 
-describe('Text DetoxContext', () => {
+describe('Test DetoxContext', () => {
   it('should send args to JS layer', async () => {
     await device.launchApp({
       newInstance: true,
