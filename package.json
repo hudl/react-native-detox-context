@@ -1,6 +1,6 @@
 {
   "name": "react-native-detox-context",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Easily pass data from your Detox e2e tests to the JS layer",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
