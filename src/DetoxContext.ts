@@ -15,13 +15,34 @@ export default class DetoxContext {
     }
   }
 
+  public static getNumber(key: string): number | undefined {
+    if (!DetoxContext.isAutomatedTest) {
+      return undefined;
+    }
+
+    const value = DetoxContext.automationProps[key];
+
+    if (value && typeof value === 'string') {
+      const numValue = Number(value);
+
+      if (!isNaN(numValue)) {
+        return numValue;
+      }
+    }
+
+    return !!value && typeof value === 'number' ? value : undefined;
+  }
+
   public static getString(key: string): string | undefined {
     if (!DetoxContext.isAutomatedTest) {
       return undefined;
     }
 
     const value = DetoxContext.automationProps[key];
-    return value !== undefined && typeof value === 'string' ? value : undefined;
+
+    return !!value && typeof value === 'string' && value !== 'null'
+      ? value
+      : undefined;
   }
 
   public static getBool(key: string): boolean | undefined {
@@ -37,9 +58,7 @@ export default class DetoxContext {
       }
     }
 
-    return value !== undefined && typeof value === 'boolean'
-      ? value
-      : undefined;
+    return !!value && typeof value === 'boolean' ? value : undefined;
   }
 
   public static getObject<T>(key: string): T | undefined {
@@ -49,6 +68,6 @@ export default class DetoxContext {
 
     const value = DetoxContext.getString(key);
 
-    return value !== undefined ? JSON.parse(value) : undefined;
+    return value ? JSON.parse(value) : undefined;
   }
 }

@@ -9,6 +9,9 @@ describe('Test DetoxContext', () => {
         someString: 'a string',
         someBool: true,
         someObject: { prop1: 'value1', prop2: 'value2' },
+        someNumber: 45,
+        someUndefined: undefined,
+        someNull: null,
       }),
     });
   });

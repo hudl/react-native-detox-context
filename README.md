@@ -42,7 +42,7 @@ function App() {
 
   console.log('String value from context:', DetoxContext.getString('someString'));
   console.log('Boolean value from context:', DetoxContext.getBool('someBool'));
-  console.log('Object value from context:', DetoxContext.getObject('someObject'));
+  console.log('Object value from context:', DetoxContext.getObject<SomeType>('someObject'));
 
   return <View />;
 }
@@ -169,7 +169,7 @@ describe('Some Test suite', () => {
 ```jsx
 import { withDetoxContext, DetoxContext } from 'react-native-detox-context';
 
-interface SomeObject {
+interface SomeType {
     prop1: string;
     prop2: string;
 }
@@ -183,7 +183,7 @@ function App() {
     // You can use these functions anywhere in your component tree.
     console.log('String value', DetoxContext.getString('someString'));
     console.log('Boolean value', DetoxContext.getBool('someBool'));
-    console.log('Object value', DetoxContext.getObject<SomeObject>('someObject'));
+    console.log('Object value', DetoxContext.getObject<SomeType>('someObject'));
     
     ...
 }

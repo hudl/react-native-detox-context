@@ -11,6 +11,18 @@ function App() {
   );
   console.log('Boolean value from context:', DetoxContext.getBool('someBool'));
   console.log(
+    'Number value from context:',
+    DetoxContext.getNumber('someNumber')
+  );
+  console.log(
+    'Undefined value from context:',
+    DetoxContext.getString('someUndefined')
+  );
+  console.log(
+    'Null value from context (which should be undefined):',
+    DetoxContext.getString('someNull')
+  );
+  console.log(
     'Object value from context:',
     DetoxContext.getObject<{ prop1: string; prop2: string }>('someObject')
   );
