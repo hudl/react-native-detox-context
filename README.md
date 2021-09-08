@@ -19,6 +19,7 @@ describe('Some Test suite', () => {
         // React Native app during the e2e test.
         const args = contextArgs({
             someString: 'a string',
+            someNumber: 45,
             someBool: true,
             someObject: { prop1: 'value1', prop2: 'value2' },
         });
@@ -41,6 +42,7 @@ function App() {
   console.log('isAutomatedTest:', DetoxContext.isAutomatedTest); // true during e2e tests
 
   console.log('String value from context:', DetoxContext.getString('someString'));
+  console.log('Number value from context:', DetoxContext.getNumber('someNumber'));
   console.log('Boolean value from context:', DetoxContext.getBool('someBool'));
   console.log('Object value from context:', DetoxContext.getObject<SomeType>('someObject'));
 
@@ -152,6 +154,7 @@ describe('Some Test suite', () => {
         // React Native app during the e2e test.
         const args = contextArgs({
             someString: 'a string',
+            someNumber: 45,
             someBool: true,
             someObject: { prop1: 'value1', prop2: 'value2' },
         });
@@ -182,6 +185,7 @@ function App() {
     //
     // You can use these functions anywhere in your component tree.
     console.log('String value', DetoxContext.getString('someString'));
+    console.log('Number value', DetoxContext.getNumber('someNumber'));
     console.log('Boolean value', DetoxContext.getBool('someBool'));
     console.log('Object value', DetoxContext.getObject<SomeType>('someObject'));
     
