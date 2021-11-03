@@ -1,6 +1,11 @@
 @objc(DetoxContext)
 public class DetoxContext: NSObject {
   @objc
+  public static func requiresMainQueueSetup() -> Bool {
+    return false
+  }
+
+  @objc
   public static func processLaunchArgs() -> [String:Any] {
     let arguments = ProcessInfo.processInfo.arguments
     var props: [String:Any] = [:]
