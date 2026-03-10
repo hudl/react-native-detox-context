@@ -1,30 +1,36 @@
 {
-  "testRunner": "jest",
-  "runnerConfig": "e2e/config.json",
-  "skipLegacyWorkersInjection": true,
+  "testRunner": {
+    "args": {
+      "$0": "jest",
+      "config": "e2e/jest.config.js"
+    },
+    "jest": {
+      "setupTimeout": 120000
+    }
+  },
   "apps": {
     "ios": {
       "type": "ios.app",
-      "build": "cd ios && xcodebuild -workspace DetoxContextExample.xcworkspace -configuration Debug -scheme DetoxContextExample -derivedDataPath build/ -destination id=FFDDEAE5-D9C4-4ADD-8900-A21D2D04B6D2",
-      "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/DetoxContextExample.app"
+      "build": "cd ios && xcodebuild -workspace DetoxContextExample.xcworkspace -configuration Release -scheme DetoxContextExample -derivedDataPath build/ -sdk iphonesimulator",
+      "binaryPath": "ios/build/Build/Products/Release-iphonesimulator/DetoxContextExample.app"
     },
     "android": {
       "type": "android.apk",
-      "build": "cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug && cd ..",
-      "binaryPath": "android/app/build/outputs/apk/debug/app-debug.apk"
+      "build": "cd android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release && cd ..",
+      "binaryPath": "android/app/build/outputs/apk/release/app-release.apk"
     }
   },
   "devices": {
     "simulator": {
       "type": "ios.simulator",
       "device": {
-        "type": "iPhone 11"
+        "type": "iPhone 17"
       }
     },
     "emulator": {
       "type": "android.emulator",
       "device": {
-        "avdName": "Pixel_29"
+        "avdName": "Pixel_36"
       }
     }
   },

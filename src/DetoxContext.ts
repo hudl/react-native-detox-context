@@ -1,4 +1,5 @@
 import type { DetoxPropMap } from './Types';
+import type { LogBox } from 'react-native';
 
 export default class DetoxContext {
   public static isAutomatedTest = false;
@@ -11,7 +12,7 @@ export default class DetoxContext {
 
     if (__DEV__ && DetoxContext.isAutomatedTest) {
       console.log('[DetoxContext] Disabling LogBox during automated test');
-      require('react-native').LogBox.ignoreAllLogs(true);
+      (require('react-native').LogBox as LogBox).ignoreAllLogs(true);
     }
   }
 

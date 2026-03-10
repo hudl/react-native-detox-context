@@ -81,60 +81,40 @@ export default withDetoxContext(App);
 
 ### Android setup
 
-Update your `MainActivity.java` with the following changes:
+Update your `MainActivity.kt` with the following changes:
 
-```diff
-package com.somepackage;
+1. Add the import:
 
-import com.facebook.react.ReactActivity;
-+ import android.os.Bundle;
-+ import com.facebook.react.ReactActivityDelegate;
-+ import com.hudl.rn.detoxcontext.DetoxContext;
+```kotlin
+import com.hudl.rn.detoxcontext.DetoxContext
+```
 
-public class MainActivity extends ReactActivity {
+2. Override `getLaunchOptions` in your `ReactActivityDelegate` to pass launch args as initial props:
 
-  @Override
-  protected String getMainComponentName() {
-    return "somecomponent";
-  }
-
-+  @Override
-+  protected ReactActivityDelegate createReactActivityDelegate() {
-+    return new ReactActivityDelegate(this, getMainComponentName()) {
-+      @Override
-+      protected Bundle getLaunchOptions() {
-+        return DetoxContext.processLaunchArgs(getIntent());
-+      }
-+    };
-+  }
-}
+```kotlin
+override fun createReactActivityDelegate() = ReactActivityDelegateWrapper(...) {
+    override fun getLaunchOptions() = DetoxContext.processLaunchArgs(intent)
+})
 ```
 
 ### iOS setup
 
 First run a pod install (e.g. `npx pod-install`) so that the `react-native-detox-context` library gets linked.
 
-Secondly update your `AppDelegate.m` with these changes:
+Then update your `AppDelegate.swift` with the following changes:
 
-1. Add the following import
+1. Add the import:
 
-```objectivec
-@import react_native_detox_context;
+```swift
+import RNDetoxContext
 ```
 
-2. Update the `initialProperties` param:
+2. Pass `initialProperties` when creating the root view:
 
-```objectivec
-
-// Before (initialProperties is nil)
-RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
-                                                 moduleName:@"somecomponent"
-                                          initialProperties:nil];
-
-// After (i.e. update the initialProperties from nil to [DetoxContext processLaunchArgs])
-RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
-                                                 moduleName:@"somecomponent"
-                                          initialProperties:[DetoxContext processLaunchArgs]];
+```swift
+factory.startReactNative(
+  ...
+  initialProperties: DetoxContext.processLaunchArgs())
 ```
 
 ## Usage
@@ -197,8 +177,14 @@ export default withDetoxContext(App);
 
 ## Contributing
 
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
+- [Development workflow](CONTRIBUTING.md#development-workflow)
+- [Sending a pull request](CONTRIBUTING.md#sending-a-pull-request)
+- [Code of conduct](CODE_OF_CONDUCT.md)
 
 ## License
 
 MIT
+
+---
+
+Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
