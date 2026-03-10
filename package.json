@@ -1,46 +1,54 @@
 {
   "name": "react-native-detox-context",
-  "version": "0.3.1",
+  "version": "1.0.0",
   "description": "Easily pass data from your Detox e2e tests to the JS layer",
-  "main": "lib/commonjs/index",
-  "module": "lib/module/index",
-  "types": "lib/typescript/index.d.ts",
-  "react-native": "src/index",
-  "source": "src/index",
+  "main": "./lib/commonjs/index.js",
+  "module": "./lib/module/index.js",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "module": "./lib/module/index.js",
+      "default": "./lib/commonjs/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
     "src",
     "lib",
     "android",
     "ios",
     "cpp",
-    "react-native-detox-context.podspec",
-    "!lib/typescript/example",
-    "!android/build",
+    "*.podspec",
+    "react-native.config.js",
     "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
     "!**/__tests__",
     "!**/__fixtures__",
-    "!**/__mocks__"
+    "!**/__mocks__",
+    "!**/.*"
   ],
   "scripts": {
-    "bootstrap": "yarn example && yarn && yarn pods",
-    "clean": "rimraf ./lib ./node_modules ./example/node_modules ./**/.gradle ./**/build ./**/.idea ~/Library/Developer/Xcode/DerivedData/DetoxContextExample-* ./**/Pods",
-    "compile": "yarn typescript",
-    "example": "yarn --cwd example",
-    "lc": "yarn lint-fix && yarn compile",
-    "lint": "eslint \"**/*.{js,ts,tsx}\" --max-warnings=0",
-    "lint-fix": "yarn lint --fix",
-    "pods": "cd example && pod-install --quiet",
+    "example": "yarn workspace react-native-detox-context-example",
+    "clean": "del-cli lib",
     "prepare": "bob build",
-    "release": "release-it",
-    "test": "jest --passWithNoTests",
-    "typescript": "tsc --noEmit"
+    "typecheck": "tsc",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "release": "release-it --only-version"
   },
   "keywords": [
     "react-native",
     "ios",
     "android"
   ],
-  "repository": "https://github.com/hudl/react-native-detox-context",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hudl/react-native-detox-context.git"
+  },
   "author": "hudl",
   "license": "MIT",
   "bugs": {
@@ -51,45 +59,67 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^11.0.0",
-    "@react-native-community/eslint-config": "^2.0.0",
-    "@release-it/conventional-changelog": "^2.0.0",
-    "@types/detox": "^17.14.2",
-    "@types/jest": "^27.0.1",
-    "@types/react": "^17.0.19",
-    "@types/react-native": "0.64.13",
-    "commitlint": "^11.0.0",
-    "detox": "^18.20.3",
-    "eslint": "^7.2.0",
-    "eslint-config-prettier": "^7.0.0",
-    "eslint-plugin-prettier": "^3.1.3",
-    "husky": "^4.2.5",
-    "jest": "^26.0.1",
-    "pod-install": "^0.1.0",
-    "prettier": "^2.0.5",
-    "react": "17.0.2",
-    "react-native": "0.65.1",
-    "react-native-builder-bob": "^0.18.0",
-    "release-it": "^14.2.2",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.1.3"
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/compat": "^1.3.2",
+    "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.35.0",
+    "@react-native/babel-preset": "0.83.0",
+    "@react-native/eslint-config": "0.83.0",
+    "@release-it/conventional-changelog": "^10.0.1",
+    "@types/jest": "^29",
+    "@types/react": "^19.1.12",
+    "commitlint": "^19.8.1",
+    "del-cli": "^6.0.0",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "expo": "^55.0.5",
+    "jest": "^29",
+    "lefthook": "^2.0.3",
+    "prettier": "^2.8.8",
+    "react": "19.2.0",
+    "react-native": "0.83.2",
+    "react-native-builder-bob": "^0.40.18",
+    "release-it": "^19.0.4",
+    "turbo": "^2.5.6",
+    "typescript": "^5.9.2"
   },
   "peerDependencies": {
     "react": "*",
     "react-native": "*"
   },
-  "jest": {
-    "preset": "react-native",
-    "modulePathIgnorePatterns": [
-      "<rootDir>/example/node_modules",
-      "<rootDir>/lib/"
+  "workspaces": [
+    "example"
+  ],
+  "packageManager": "yarn@4.11.0",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
     ]
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "yarn lint && yarn typescript"
+  "codegenConfig": {
+    "name": "DetoxContextSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.detoxcontext"
     }
+  },
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
   },
   "commitlint": {
     "extends": [
@@ -109,55 +139,20 @@
     },
     "plugins": {
       "@release-it/conventional-changelog": {
-        "preset": "angular"
+        "preset": {
+          "name": "angular"
+        }
       }
     }
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "jest": true
-    },
-    "extends": [
-      "@react-native-community",
-      "prettier"
+  "create-react-native-library": {
+    "type": "turbo-module",
+    "languages": "kotlin-objc",
+    "tools": [
+      "eslint",
+      "lefthook",
+      "release-it"
     ],
-    "rules": {
-      "prettier/prettier": [
-        "error",
-        {
-          "quoteProps": "consistent",
-          "singleQuote": true,
-          "tabWidth": 2,
-          "trailingComma": "es5",
-          "useTabs": false
-        }
-      ]
-    }
-  },
-  "eslintIgnore": [
-    "node_modules/",
-    "lib/"
-  ],
-  "prettier": {
-    "quoteProps": "consistent",
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "es5",
-    "useTabs": false
-  },
-  "react-native-builder-bob": {
-    "source": "src",
-    "output": "lib",
-    "targets": [
-      "commonjs",
-      "module",
-      [
-        "typescript",
-        {
-          "project": "tsconfig.build.json"
-        }
-      ]
-    ]
+    "version": "0.57.2"
   }
 }
