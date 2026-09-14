@@ -1,0 +1,15 @@
+version: 1
+component:
+  name: react-native-detox-context
+  description: "Detox e2e testing utility: pass data from Detox tests to the React Native JS layer"
+  owner: vision
+  type: internal_developer_tool
+  system: platform_testing
+  lifecycle: business_as_usual
+  tags:
+    - key: data-classification
+      value: restricted
+  repositories:
+    - name: hudl/react-native-detox-context
+      path: "/"
+      provider: github
